@@ -17,10 +17,16 @@ jobs:
         include:
           - platform: 'windows-latest'
             target: 'x86_64-pc-windows-msvc'
+            args: '--target x86_64-pc-windows-msvc'
           - platform: 'macos-latest'
-            target: 'universal-apple-darwin'
+            target: 'aarch64-apple-darwin'
+            args: '--target aarch64-apple-darwin'
+          - platform: 'macos-latest'
+            target: 'x86_64-apple-darwin'
+            args: '--target x86_64-apple-darwin'
           - platform: 'ubuntu-22.04'
             target: 'x86_64-unknown-linux-gnu'
+            args: '--target x86_64-unknown-linux-gnu'
 
     runs-on: ${{ matrix.platform }}
     
@@ -93,7 +99,7 @@ jobs:
 
       - name: Build application
         working-directory: ./source
-        run: pnpm tauri build --target ${{ matrix.target }}
+        run: pnpm tauri build ${{ matrix.args }}
 
       # 步骤 7: 上传构建产物
       - name: Upload artifacts (Windows)
@@ -106,11 +112,20 @@ jobs:
             source/src-tauri/target/${{ matrix.target }}/release/bundle/nsis/*.exe
           retention-days: 7
 
-      - name: Upload artifacts (macOS)
-        if: matrix.platform == 'macos-latest'
+      - name: Upload artifacts (macOS Intel)
+        if: matrix.platform == 'macos-latest' && matrix.target == 'x86_64-apple-darwin'
         uses: actions/upload-artifact@v4
         with:
-          name: macos-universal
+          name: macos-x64
+          path: |
+            source/src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*.dmg
+          retention-days: 7
+
+      - name: Upload artifacts (macOS Apple Silicon)
+        if: matrix.platform == 'macos-latest' && matrix.target == 'aarch64-apple-darwin'
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-aarch64
           path: |
             source/src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*.dmg
           retention-days: 7
