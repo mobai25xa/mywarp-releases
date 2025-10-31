@@ -36,9 +36,16 @@ jobs:
         shell: bash
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
+          
+      # 步骤 2.5: 验证 SSH 密钥
+      - name: Verify SSH key
+        shell: bash
+        run: |
+          echo "Testing SSH connection to GitHub..."
+          ssh -T git@github.com || true
 
       # 步骤 3: 克隆私有仓库源代码
       - name: Clone private repository
