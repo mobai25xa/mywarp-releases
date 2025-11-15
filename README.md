@@ -20,12 +20,11 @@ MyWarp 是一个现代化的 Warp Terminal 多账户管理工具。
 
 - 🔄 多账户管理和快速切换
 - 📊 实时配额监控
-- ⚙️ MCP 配置管理
-- 📧 临时邮箱集成
 - 🎨 精美的现代化界面
 - 🌍 完整的跨平台支持
 ###界面
-<img width="1002" height="789" alt="QQ_1761797445231" src="https://github.com/user-attachments/assets/8f2773f9-2b08-4e44-b539-53d12461ce39" />
+<img width="1002" height="789" alt="QQ_1763175090715" src="https://github.com/user-attachments/assets/0ca10bbf-89d3-40b2-9bc4-e2552a468aeb" />
+
 
 
 
